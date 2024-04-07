@@ -22,7 +22,6 @@ final class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = 200
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
     
@@ -30,24 +29,17 @@ final class ImagesListViewController: UIViewController {
                 
         let imageName = photosName[indexPath.row]
         guard let image = UIImage(named: imageName) else { return }
-        
-        let currentDate = dateFormatter.string(from: .now)
+        cell.cellImageOutlet.image = image
         
         let likeImage: UIImage? = indexPath.row % 2 == 0 ? UIImage(named: "ActiveLike") : UIImage(named: "NoActiveLike")
-        
-        cell.cellImageOutlet.image = image
-        cell.dateLabelOutlet.text = currentDate
         cell.likeButtonOutlet.setImage(likeImage, for: .normal)
-        cell.dateBackgroundOutlet.setGradientBackground(startColor: .clear, endColor: UIColor.blackYp, opacity: 0.2)
+        
+        cell.dateLabelOutlet.text = dateFormatter.string(from: Date())
     }
 
 }
 
 extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return 0
@@ -78,7 +70,5 @@ extension ImagesListViewController: UITableViewDataSource {
         
         return imageListCell
     }
-    
-    
 }
 

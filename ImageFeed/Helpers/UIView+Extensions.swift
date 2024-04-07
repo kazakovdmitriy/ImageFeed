@@ -13,10 +13,8 @@ extension UIView {
         gradientLayer.frame = bounds
         gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
         
-        // Установите общую прозрачность градиента
         gradientLayer.opacity = opacity
         
-        // Установите ориентацию градиента, например, вертикально
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         
