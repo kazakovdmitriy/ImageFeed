@@ -19,11 +19,11 @@ final class ImagesListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        dateBackgroundOutlet.setGradientBackground(startColor: .clear, endColor: UIColor.ypBlack, opacity: 0.2)
+        dateBackgroundOutlet.setGradientBackground(startColor: .clear, endColor: UIColor.ypBlack, opacity: 1.0)
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
         setupDateBackgroundOutlet(cornerRadius: 16)
     }
