@@ -63,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				68BD020D2BC1757600977F91 /* Helpers */,
+				68C051692BC982E9007A6298 /* Profile */,
 				68E15F8A2BBFDFAE000B753A /* ImagesList */,
 				6844D4C62BB590C9008F1525 /* AppDelegate.swift */,
 				6844D4C82BB590C9008F1525 /* SceneDelegate.swift */,
@@ -70,7 +71,6 @@
 				6844D4CF2BB590CA008F1525 /* Assets.xcassets */,
 				6844D4D12BB590CA008F1525 /* LaunchScreen.storyboard */,
 				6844D4D42BB590CA008F1525 /* Info.plist */,
-				68C051672BC9679C007A6298 /* ProfileViewController.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -81,6 +81,14 @@
 				68BD020E2BC1759500977F91 /* UIView+Extensions.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		68C051692BC982E9007A6298 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				68C051672BC9679C007A6298 /* ProfileViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		68E15F8A2BBFDFAE000B753A /* ImagesList */ = {
