@@ -14,6 +14,7 @@
 		6844D4D02BB590CA008F1525 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6844D4CF2BB590CA008F1525 /* Assets.xcassets */; };
 		6844D4D32BB590CA008F1525 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6844D4D12BB590CA008F1525 /* LaunchScreen.storyboard */; };
 		68BD020F2BC1759500977F91 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BD020E2BC1759500977F91 /* UIView+Extensions.swift */; };
+		68C051682BC9679C007A6298 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C051672BC9679C007A6298 /* ProfileViewController.swift */; };
 		68E15F892BBFDF87000B753A /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E15F882BBFDF87000B753A /* ImagesListCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		6844D4D22BB590CA008F1525 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6844D4D42BB590CA008F1525 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68BD020E2BC1759500977F91 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		68C051672BC9679C007A6298 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		68E15F882BBFDF87000B753A /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +70,7 @@
 				6844D4CF2BB590CA008F1525 /* Assets.xcassets */,
 				6844D4D12BB590CA008F1525 /* LaunchScreen.storyboard */,
 				6844D4D42BB590CA008F1525 /* Info.plist */,
+				68C051672BC9679C007A6298 /* ProfileViewController.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68C051682BC9679C007A6298 /* ProfileViewController.swift in Sources */,
 				6844D4CB2BB590C9008F1525 /* ImagesListViewController.swift in Sources */,
 				68BD020F2BC1759500977F91 /* UIView+Extensions.swift in Sources */,
 				68E15F892BBFDF87000B753A /* ImagesListCell.swift in Sources */,

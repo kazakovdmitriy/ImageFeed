@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cIf-m9-Eme">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +19,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ML9-q9-mWn">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="YP Black"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="140" id="xGU-1l-UTb" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="140"/>
@@ -102,11 +103,95 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="135.1145038167939" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="4" y="4"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="LaQ-si-Cqf">
+            <objects>
+                <viewController id="cIf-m9-Eme" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QbV-Li-rvn">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Userpick " translatesAutoresizingMaskIntoConstraints="NO" id="UJF-IN-RHi" userLabel="Userpick">
+                                <rect key="frame" x="16" y="76" width="76" height="76"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="76" id="8Bc-YY-Ur3"/>
+                                    <constraint firstAttribute="width" constant="76" id="bdY-Bb-Y6A"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Екатерина Новикова" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DEH-4F-431" userLabel="Name">
+                                <rect key="frame" x="15.999999999999986" y="152" width="233.66666666666663" height="28"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                <color key="textColor" name="YP White"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@ekaterina_nov" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfc-eR-Eq9" userLabel="Account">
+                                <rect key="frame" x="16" y="188" width="97" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.68235294117647061" green="0.68627450980392157" blue="0.70588235294117641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, world!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ejq-v8-gqH" userLabel="Status">
+                                <rect key="frame" x="16" y="212" width="76" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" name="YP White"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8K0-4f-yZr">
+                                <rect key="frame" x="345" y="92" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="r9L-t7-idd"/>
+                                    <constraint firstAttribute="height" constant="44" id="vZA-ho-vur"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="Logout "/>
+                                <connections>
+                                    <action selector="logoutAction:" destination="cIf-m9-Eme" eventType="touchUpInside" id="d8J-cF-qh0"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="yCe-Qp-iLe"/>
+                        <color key="backgroundColor" name="YP Black"/>
+                        <constraints>
+                            <constraint firstItem="Xfc-eR-Eq9" firstAttribute="top" secondItem="DEH-4F-431" secondAttribute="bottom" constant="8" id="1iN-N3-QcX"/>
+                            <constraint firstItem="ejq-v8-gqH" firstAttribute="top" secondItem="Xfc-eR-Eq9" secondAttribute="bottom" constant="8" id="6Lh-PE-yr4"/>
+                            <constraint firstItem="8K0-4f-yZr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UJF-IN-RHi" secondAttribute="trailing" id="6c7-DN-hmf"/>
+                            <constraint firstItem="ejq-v8-gqH" firstAttribute="leading" secondItem="QbV-Li-rvn" secondAttribute="leading" constant="16" id="9Ei-Rp-2vd"/>
+                            <constraint firstItem="yCe-Qp-iLe" firstAttribute="trailing" secondItem="8K0-4f-yZr" secondAttribute="trailing" constant="4" id="9FP-5l-ccz"/>
+                            <constraint firstItem="UJF-IN-RHi" firstAttribute="leading" secondItem="QbV-Li-rvn" secondAttribute="leading" constant="16" id="C2v-7x-500"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Xfc-eR-Eq9" secondAttribute="trailing" constant="16" id="JPa-4B-i8s"/>
+                            <constraint firstItem="UJF-IN-RHi" firstAttribute="bottom" secondItem="DEH-4F-431" secondAttribute="topMargin" constant="-8" id="KSd-xI-7zD"/>
+                            <constraint firstItem="8K0-4f-yZr" firstAttribute="centerY" secondItem="UJF-IN-RHi" secondAttribute="centerY" id="MxC-dK-Wv3"/>
+                            <constraint firstItem="DEH-4F-431" firstAttribute="leading" secondItem="QbV-Li-rvn" secondAttribute="leading" constant="16" id="R7j-iR-vV5"/>
+                            <constraint firstItem="Xfc-eR-Eq9" firstAttribute="leading" secondItem="QbV-Li-rvn" secondAttribute="leading" constant="16" id="Viy-Lm-zqp"/>
+                            <constraint firstItem="UJF-IN-RHi" firstAttribute="top" secondItem="QbV-Li-rvn" secondAttribute="top" constant="76" id="Xon-3n-jw3"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="DEH-4F-431" secondAttribute="trailing" constant="16" id="pY9-6F-GqY"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ejq-v8-gqH" secondAttribute="trailing" constant="16" id="xmN-YG-fcy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="avatarImageOutlet" destination="MxC-dK-Wv3" id="CJG-1J-1NS"/>
+                        <outlet property="loginLabelOutlet" destination="Xfc-eR-Eq9" id="3FP-k8-Hai"/>
+                        <outlet property="nameLabelOutlet" destination="DEH-4F-431" id="3Yy-PJ-3kQ"/>
+                        <outlet property="statusLabelOutlet" destination="ejq-v8-gqH" id="Cda-BD-WwV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lav-HR-Lld" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="954.96183206106866" y="3.5211267605633805"/>
         </scene>
     </scenes>
     <resources>
         <image name="0" width="1600" height="1059"/>
         <image name="ActiveLike" width="42" height="42"/>
+        <image name="Logout " width="24" height="24"/>
+        <image name="Userpick " width="70" height="70"/>
+        <namedColor name="YP Black">
+            <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="YP White">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
