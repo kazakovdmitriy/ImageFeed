@@ -116,7 +116,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="414" translatesAutoresizingMaskIntoConstraints="NO" id="sYn-QU-0tq">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sYn-QU-0tq">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="bEq-nZ-2q5" userLabel="Full Screen Image">
@@ -131,7 +131,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grC-oT-Ceb" userLabel="BackButton">
-                                <rect key="frame" x="9" y="9" width="44" height="44"/>
+                                <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="H8b-6k-Jgz"/>
                                     <constraint firstAttribute="height" constant="44" id="Kyx-bS-Zhe"/>
@@ -143,7 +143,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxJ-cx-9I8" userLabel="SharingButton">
-                                <rect key="frame" x="162" y="745" width="51" height="51"/>
+                                <rect key="frame" x="162" y="744" width="51" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="51" id="NjU-rI-7h9"/>
                                     <constraint firstAttribute="height" constant="51" id="pnG-k4-Dc2"/>
@@ -158,14 +158,14 @@
                         <viewLayoutGuide key="safeArea" id="PGQ-rA-6kk"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="sYn-QU-0tq" firstAttribute="trailing" secondItem="PGQ-rA-6kk" secondAttribute="trailing" id="82m-Oe-7B8"/>
-                            <constraint firstItem="PGQ-rA-6kk" firstAttribute="bottom" secondItem="gxJ-cx-9I8" secondAttribute="bottom" constant="16" id="C3r-be-SjH"/>
+                            <constraint firstItem="PGQ-rA-6kk" firstAttribute="trailing" secondItem="sYn-QU-0tq" secondAttribute="trailing" id="82m-Oe-7B8"/>
+                            <constraint firstItem="PGQ-rA-6kk" firstAttribute="bottom" secondItem="gxJ-cx-9I8" secondAttribute="bottom" constant="17" id="C3r-be-SjH"/>
                             <constraint firstItem="gxJ-cx-9I8" firstAttribute="centerX" secondItem="TrQ-zO-heA" secondAttribute="centerX" id="Cca-dx-Q5G"/>
-                            <constraint firstItem="grC-oT-Ceb" firstAttribute="top" secondItem="PGQ-rA-6kk" secondAttribute="top" constant="9" id="XX3-cX-l6Z"/>
+                            <constraint firstItem="grC-oT-Ceb" firstAttribute="top" secondItem="PGQ-rA-6kk" secondAttribute="top" constant="8" id="XX3-cX-l6Z"/>
                             <constraint firstItem="sYn-QU-0tq" firstAttribute="leading" secondItem="PGQ-rA-6kk" secondAttribute="leading" id="ZeX-GM-NzD"/>
-                            <constraint firstItem="sYn-QU-0tq" firstAttribute="top" secondItem="PGQ-rA-6kk" secondAttribute="top" id="ZiJ-dx-nWa"/>
-                            <constraint firstItem="grC-oT-Ceb" firstAttribute="leading" secondItem="PGQ-rA-6kk" secondAttribute="leading" constant="9" id="qkA-sO-sR5"/>
-                            <constraint firstItem="sYn-QU-0tq" firstAttribute="bottom" secondItem="PGQ-rA-6kk" secondAttribute="bottom" id="ybk-5j-Vle"/>
+                            <constraint firstItem="sYn-QU-0tq" firstAttribute="top" secondItem="TrQ-zO-heA" secondAttribute="top" id="ZiJ-dx-nWa"/>
+                            <constraint firstItem="grC-oT-Ceb" firstAttribute="leading" secondItem="PGQ-rA-6kk" secondAttribute="leading" constant="8" id="qkA-sO-sR5"/>
+                            <constraint firstAttribute="bottom" secondItem="sYn-QU-0tq" secondAttribute="bottom" id="ybk-5j-Vle"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4ZG-Mz-i1f"/>
