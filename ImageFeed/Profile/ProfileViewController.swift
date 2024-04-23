@@ -54,31 +54,22 @@ final class ProfileViewController: UIViewController {
             label.font = UIFont.systemFont(ofSize: fontSize)
         }
         
-        if colorName == "YP White" {
-            label.textColor = UIColor(named: colorName) ?? UIColor.white
-        } else {
-            label.textColor = UIColor(named: colorName) ?? UIColor.gray
-        }
+        label.textColor = UIColor(named: colorName) ?? UIColor.white
         
         return label
     }
     
     private func setupViews() {
         
-        view.addSubview(avatarImage)
-        avatarImage.translatesAutoresizingMaskIntoConstraints = false
+        [avatarImage,
+         nameLabel,
+         loginLabel,
+         statusLabel,
+         exitButton].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
-        view.addSubview(nameLabel)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(loginLabel)
-        loginLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(statusLabel)
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(exitButton)
-        exitButton.translatesAutoresizingMaskIntoConstraints = false
         exitButton.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         
     }
