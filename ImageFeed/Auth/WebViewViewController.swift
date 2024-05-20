@@ -79,6 +79,7 @@ final class WebViewViewController: UIViewController {
         ]
         
         guard let url = urlComponents.url else {
+            assertionFailure("Failed to create URLComponents")
             return
         }
         
@@ -111,6 +112,7 @@ extension WebViewViewController: WKNavigationDelegate {
         {
             return codeItem.value
         } else {
+            assertionFailure("Failed to load auth page")
             return nil
         }
     }
