@@ -112,7 +112,6 @@ extension WebViewViewController: WKNavigationDelegate {
         {
             return codeItem.value
         } else {
-            assertionFailure("Failed to load auth page")
             return nil
         }
     }
