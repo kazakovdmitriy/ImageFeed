@@ -14,6 +14,11 @@ enum FontStyle {
 
 final class ProfileViewController: UIViewController {
     
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    private let profileService = ProfileService.shared
+    private let storage = OAuth2TokenStorage.shared
+    
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "Userpick")
         let imageView = UIImageView(image: image)
@@ -39,6 +44,19 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(forName: ProfileImageService.didChangeNotification,
+                         object: nil,
+                         queue: .main) { [weak self] _ in
+                guard let self = self else { return}
+                self.updateAvatar()
+            }
+        
+        updateAvatar()
+                
+        guard let profile = profileService.profile else { return }
+        
+        fillProfile(profile: profile)
         setupViews()
         constraintViews()
     }
@@ -57,6 +75,14 @@ final class ProfileViewController: UIViewController {
         label.textColor = UIColor(named: colorName) ?? UIColor.white
         
         return label
+    }
+    
+    private func updateAvatar() {
+        guard let profileImageURL = ProfileImageService.shared.avatarURL,
+              let url = URL(string: profileImageURL)
+        else { return }
+                
+        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
     }
     
     private func setupViews() {
@@ -95,6 +121,12 @@ final class ProfileViewController: UIViewController {
             exitButton.centerYAnchor.constraint(equalTo: avatarImage.centerYAnchor),
             exitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -4),
         ])
+    }
+    
+    private func fillProfile(profile: Profile) {
+        nameLabel.text = profile.name
+        loginLabel.text = profile.username
+        statusLabel.text = profile.bio
     }
     
     @objc private func didTapLogoutButton() {

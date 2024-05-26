@@ -5,6 +5,7 @@
 //  Created by Дмитрий on 07.05.2024.
 //
 
+import ProgressHUD
 import UIKit
 
 protocol AuthViewControllerDelegate: AnyObject{
@@ -48,21 +49,21 @@ final class AuthViewController: UIViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+                
+        UIBlockingProgressHUD.show()
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
-            
             guard let self = self else { return }
+            
+            UIBlockingProgressHUD.dismiss()
             
             switch result {
             case .success(_):
                 self.delegate?.didAuthenticate(self)
             case .failure(_):
                 assertionFailure("Не удалось получить токен")
+                break
             }
-            
-            vc.dismiss(animated: true)
         }
-        
-        delegate?.didAuthenticate(self)
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
