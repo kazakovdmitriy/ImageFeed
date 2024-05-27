@@ -23,12 +23,12 @@ final class OAuth2Service {
     
     private init() {}
     
-    func fetchOAuthToken(code: String, completition: @escaping (Result<String,Error>) -> Void) {
+    func fetchOAuthToken(code: String, completion: @escaping (Result<String,Error>) -> Void) {
         
         assert(Thread.isMainThread)
         
         guard lastCode != code else {
-            completition(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(AuthServiceError.invalidRequest))
             return
         }
         
@@ -38,44 +38,25 @@ final class OAuth2Service {
         guard
             let request = makeOAuthTokenRequest(code: code)
         else {
-            completition(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(AuthServiceError.invalidRequest))
             return
         }
         
-        let task = urlSession.dataTask(with: request) { [weak self] data, response, error in
-            
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             guard let self = self else { return }
             
-            DispatchQueue.main.async {
-                
-                if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                    if 200 ..< 300 ~= statusCode {
-                        do {
-                            let answer: OAuthTokenResponseBody = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
-                            
-                            self.storage.token = answer.accessToken
-                            
-                            completition(.success(answer.accessToken))
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                    } else {
-                        assertionFailure("Failed to load page. Code: \(statusCode)")
-                        completition(.failure(NetworkError.httpStatusCode(statusCode)))
-                    }
-                } else if let error = error {
-                    assertionFailure("Failed to load page. With error: \(error)")
-                    completition(.failure(NetworkError.urlRequestError(error)))
-                } else {
-                    assertionFailure("Failed to load page")
-                    completition(.failure(NetworkError.urlSessionError))
-                }
-                
-                self.task = nil
-                self.lastCode = nil
+            switch result {
+            case .success(let answer):
+                self.storage.token = answer.accessToken
+                completion(.success(answer.accessToken))
+            case .failure(let error):
+                completion(.failure(error))
             }
+            
+            self.task = nil
+            self.lastCode = nil
         }
-        
+                        
         self.task = task
         task.resume()
     }

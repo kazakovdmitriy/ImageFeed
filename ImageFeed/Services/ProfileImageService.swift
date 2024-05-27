@@ -9,6 +9,7 @@ import Foundation
 
 enum ProfileImageServiceError: Error {
     case invalidRequest
+    case noData
 }
 
 final class ProfileImageService {
@@ -28,6 +29,9 @@ final class ProfileImageService {
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         
+        if avatarURL != nil { return }
+        task?.cancel()
+        
         guard
             let request = makeProfileImageRequest(username: username)
         else {
@@ -35,42 +39,26 @@ final class ProfileImageService {
             return
         }
         
-        let task = urlSession.dataTask(with: request) { [weak self] data, response, error in
-            
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
             guard let self = self else { return }
             
-            DispatchQueue.main.async {
-                if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                    if 200 ..< 300 ~= statusCode {
-                        do {
-                            let answer: UserResult = try JSONDecoder().decode(UserResult.self, from: data)
-                            let avatarURL = answer.profileImage.small
-                            
-                            self.avatarURL = avatarURL
-                            
-                            completion(.success(avatarURL))
-                            
-                            NotificationCenter.default
-                                .post(name: ProfileImageService.didChangeNotification,
-                                      object: self,
-                                      userInfo: ["URL": avatarURL])
-                        } catch {
-                            print(String(describing: error))
-                        }
-                    } else {
-                        assertionFailure("Failed to load page. Code: \(statusCode)")
-                        completion(.failure(NetworkError.httpStatusCode(statusCode)))
-                    }
-                } else if let error = error {
-                    assertionFailure("Failed to load page. With error: \(error)")
-                    completion(.failure(NetworkError.urlRequestError(error)))
-                } else {
-                    assertionFailure("Failed to load page")
-                    completion(.failure(NetworkError.urlSessionError))
-                }
+            switch result {
+            case .success(let answer):
+                self.avatarURL = answer.profileImage.small
                 
-                self.task = nil
+                guard let avatarURL = avatarURL else { return }
+                
+                completion(.success(avatarURL))
+                
+                NotificationCenter.default
+                    .post(name: ProfileImageService.didChangeNotification,
+                          object: self,
+                          userInfo: ["URL": avatarURL])
+            case .failure(let error):
+                completion(.failure(error))
             }
+            
+            self.task = nil
         }
         
         self.task = task
@@ -78,7 +66,7 @@ final class ProfileImageService {
     }
     
     private func makeProfileImageRequest(username: String) -> URLRequest? {
-        let baseURL = URL(string: "https://api.unsplash.com")
+        let baseURL = Constants.defaultBaseURL
         
         guard let url = URL(
             string: "/users/\(username)",

@@ -34,7 +34,7 @@ final class SplashViewController: UIViewController {
         
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
-           
+        
         window.rootViewController = tabBarController
     }
 }
@@ -60,14 +60,11 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
-        // vc.dismiss(animated: true)
-        
         guard let token = storage.token else {
             return
         }
         
         fetchProfile(token)
-        // self.switchToTabBarController()
     }
     
     private func fetchProfile(_ token: String) {
@@ -75,7 +72,9 @@ extension SplashViewController: AuthViewControllerDelegate {
         
         profileService.fetchProfile(token) { [weak self] result in
             
-            UIBlockingProgressHUD.dismiss()
+            DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+            }
             
             guard let self = self else { return }
             

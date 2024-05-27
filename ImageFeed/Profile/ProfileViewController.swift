@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 enum FontStyle {
     case bold
@@ -82,7 +83,11 @@ final class ProfileViewController: UIViewController {
               let url = URL(string: profileImageURL)
         else { return }
                 
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+        let processor = RoundCornerImageProcessor(cornerRadius: 450)
+        
+        avatarImage.kf.setImage(with: url,
+                                placeholder: UIImage(named: "placeholder"),
+                                options: [.processor(processor)])
     }
     
     private func setupViews() {

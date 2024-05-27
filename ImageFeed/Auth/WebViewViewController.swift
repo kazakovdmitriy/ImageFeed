@@ -29,6 +29,8 @@ final class WebViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        webView.allowsLinkPreview = true
+        
         estimatedProgressObservation = webView.observe(
             \.estimatedProgress,
              options: [],

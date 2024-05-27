@@ -21,58 +21,44 @@ final class ProfileService {
     private var task: URLSessionTask?
     private(set) var profile: Profile?
     
-    func fetchProfile(_ token: String, completition: @escaping (Result<Profile, Error>) -> Void) {
+    func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         assert(Thread.isMainThread)
         
-        guard 
+        if profile != nil { return }
+        task?.cancel()
+        
+        guard
             let request = makeProfileRequest(token: token) 
         else {
-            completition(.failure(ProfileServiceError.invalidRequest))
+            completion(.failure(ProfileServiceError.invalidRequest))
             return
         }
         
-        let task = urlSession.dataTask(with: request) { [weak self] data, response, error in
-            
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
             guard let self = self else { return }
             
-            DispatchQueue.main.async {
-                if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                    if 200 ..< 300 ~= statusCode {
-                        do {
-                            let answer: ProfileResult = try JSONDecoder().decode(ProfileResult.self, from: data)
-                            let profile = Profile(username: answer.username,
-                                                  name: "\(answer.firstName) \(answer.lastName)",
-                                                  loginName: "@\(answer.username)",
-                                                  bio: answer.bio ?? "")
-                            
-                            self.profile = profile
-                            
-                            completition(.success(profile))
-                        } catch {
-                            print(String(describing: error))
-                        }
-                    } else {
-                        assertionFailure("Failed to load page. Code: \(statusCode)")
-                        completition(.failure(NetworkError.httpStatusCode(statusCode)))
-                    }
-                } else if let error = error {
-                    assertionFailure("Failed to load page. With error: \(error)")
-                    completition(.failure(NetworkError.urlRequestError(error)))
-                } else {
-                    assertionFailure("Failed to load page")
-                    completition(.failure(NetworkError.urlSessionError))
-                }
+            switch result {
+            case .success(let answer):
+                let profile = Profile(username: answer.username,
+                                      name: "\(answer.firstName) \(answer.lastName)",
+                                      loginName: "@\(answer.username)",
+                                      bio: answer.bio ?? "")
                 
-                self.task = nil
+                self.profile = profile
+                completion(.success(profile))
+            case .failure(let error):
+                completion(.failure(error))
             }
+            
+            self.task = nil
         }
-        
+                
         self.task = task
         task.resume()
     }
     
     private func makeProfileRequest(token: String) -> URLRequest? {
-        let baseURL = URL(string: "https://api.unsplash.com")
+        let baseURL = Constants.defaultBaseURL
         
         guard let url = URL(
             string: "/me",
