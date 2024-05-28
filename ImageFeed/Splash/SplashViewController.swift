@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
     
@@ -26,7 +27,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         setupViews()
         constraintViews()
     }
@@ -71,8 +72,7 @@ final class SplashViewController: UIViewController {
     }
     
     private func switchToAuthController() {
-        let authViewController = AuthViewController()
-        
+        guard let authViewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
         authViewController.delegate = self
         authViewController.modalPresentationStyle = .fullScreen
         present(authViewController, animated: true)
