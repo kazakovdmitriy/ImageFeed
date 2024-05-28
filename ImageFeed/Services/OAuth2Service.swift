@@ -50,6 +50,7 @@ final class OAuth2Service {
                 self.storage.token = answer.accessToken
                 completion(.success(answer.accessToken))
             case .failure(let error):
+                print("[OAuth2Service]: \(error.localizedDescription)")
                 completion(.failure(error))
             }
             

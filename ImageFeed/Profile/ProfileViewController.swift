@@ -24,6 +24,9 @@ final class ProfileViewController: UIViewController {
         let image = UIImage(named: "Userpick")
         let imageView = UIImageView(image: image)
         
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
+        
         imageView.contentMode = .scaleAspectFit
         
         return imageView
