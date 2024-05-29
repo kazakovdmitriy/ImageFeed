@@ -5,6 +5,7 @@
 //  Created by Дмитрий on 07.05.2024.
 //
 
+import ProgressHUD
 import UIKit
 
 protocol AuthViewControllerDelegate: AnyObject{
@@ -44,25 +45,35 @@ final class AuthViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor(named: "YP Black")
     }
+    
+    private func showErrorAlert() {
+        let alertController = UIAlertController(title: "Что-то пошло не так",
+                                                message: "Не удалось войти в систему",
+                                                preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
+    }
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        
+        UIBlockingProgressHUD.show()
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
-            
             guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+            }
             
             switch result {
             case .success(_):
                 self.delegate?.didAuthenticate(self)
             case .failure(_):
-                assertionFailure("Не удалось получить токен")
+                showErrorAlert()
             }
-            
-            vc.dismiss(animated: true)
         }
-        
-        delegate?.didAuthenticate(self)
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
