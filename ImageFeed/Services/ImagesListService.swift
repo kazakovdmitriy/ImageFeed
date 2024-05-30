@@ -25,16 +25,31 @@ final class ImagesListService {
     
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
-    func fetchPhotosNextPage(_ completion: @escaping (Result<[Photo], Error>) -> Void) {
-        assert(Thread.isMainThread)
-        
+    func fetchPhotosNextPage() {
         let nextPage = (lastLoadedPage ?? 0) + 1
+        
+        fetchPhotos(page: nextPage) { [weak self] result in
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let photos):
+                self.photos += photos
+            case .failure(let error):
+                print("[ImagesListService]: \(error.localizedDescription)")
+            }
+            
+        }
+    }
+    
+    private func fetchPhotos(page: Int, _ completion: @escaping (Result<[Photo], Error>) -> Void) {
+        assert(Thread.isMainThread)
         
         // if avatarURL != nil { return }
         task?.cancel()
         
         guard
-            let request = makeImageListRequest(page: nextPage)
+            let request = makeImageListRequest(page: page)
         else {
             completion(.failure(ImagesListServiceError.invalidRequest))
             return
@@ -45,7 +60,7 @@ final class ImagesListService {
             
             switch result {
             case .success(let result):
-                self.lastLoadedPage = nextPage
+                self.lastLoadedPage = page
                 
                 result.forEach {
                     self.photos.append(self.convertResultToPhoto(result: $0))

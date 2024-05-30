@@ -105,7 +105,6 @@ extension SplashViewController: AuthViewControllerDelegate {
                 let username = profile.username
                 
                 ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in }
-                print("Загрузили картинку")
                 
                 self.switchToTabBarController()
             case .failure(let error):
