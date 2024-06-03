@@ -13,7 +13,7 @@ enum ImagesListServiceError: Error {
 
 final class ImagesListService {
     
-    static let shared = ImagesListCell()
+    static let shared = ImagesListService()
     private init() {}
     
     private let storage = OAuth2TokenStorage.shared
@@ -33,8 +33,8 @@ final class ImagesListService {
             guard let self = self else { return }
             
             switch result {
-            case .success(let photos):
-                self.photos += photos
+            case .success(_):
+                print("Photo loaded success")
             case .failure(let error):
                 print("[ImagesListService]: \(error.localizedDescription)")
             }
@@ -65,6 +65,8 @@ final class ImagesListService {
                 result.forEach {
                     self.photos.append(self.convertResultToPhoto(result: $0))
                 }
+                
+                completion(.success(self.photos))
                 
                 NotificationCenter.default
                     .post(name: ImagesListService.didChangeNotification,
@@ -105,8 +107,15 @@ final class ImagesListService {
             return nil
         }
         
+        guard let token = storage.token else {
+            print("Не удалось загрузить токен")
+            return nil
+        }
+        
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
         return request
     }
 }

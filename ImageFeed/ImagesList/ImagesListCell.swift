@@ -22,6 +22,12 @@ final class ImagesListCell: UITableViewCell {
         dateBackgroundOutlet.setGradientBackground(startColor: .clear, endColor: UIColor.ypBlack, opacity: 0.2)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cellImageOutlet.kf.cancelDownloadTask()
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         

@@ -10,12 +10,12 @@ import Foundation
 // MARK: - PhotoResultElement
 struct PhotoResultElement: Codable {
     let id: String
-    let createdAt, updatedAt: Date
+    let createdAt: Date
     let width, height: Int
     let color, blurHash: String
     let likes: Int
     let likedByUser: Bool
-    let description: String
+    let description: String?
     let currentUserCollections: [CurrentUserCollection]
     let urls: Urls
     let links: PhotoResultLinks
@@ -23,7 +23,6 @@ struct PhotoResultElement: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case createdAt = "created_at"
-        case updatedAt = "updated_at"
         case width, height, color
         case blurHash = "blur_hash"
         case likes
