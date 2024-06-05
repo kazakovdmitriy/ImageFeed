@@ -19,6 +19,7 @@ final class ProfileViewController: UIViewController {
     
     private let profileService = ProfileService.shared
     private let storage = OAuth2TokenStorage.shared
+    private let logoutService = ProfileLogoutService.shared
     
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "Userpick")
@@ -137,7 +138,38 @@ final class ProfileViewController: UIViewController {
         statusLabel.text = profile.bio
     }
     
+    private func switchToSplashScreen() {
+        let splashViewController = SplashViewController()
+        
+        splashViewController.modalPresentationStyle = .fullScreen
+        
+        present(splashViewController, animated: true)
+    }
+    
     @objc private func didTapLogoutButton() {
-        print("Пользователь хочет выйти")
+        showLogoutAlert()
+    }
+}
+
+extension ProfileViewController {
+    private func showLogoutAlert() {
+        
+        let alertController = UIAlertController(title: "Пока, пока!",
+                                                message: "Уверены что хотите выйти?",
+                                                preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            
+            guard let self = self else { return }
+            
+            self.logoutService.logout()
+            self.switchToSplashScreen()
+        }
+        let noAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+        
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        
+        present(alertController, animated: true)
     }
 }

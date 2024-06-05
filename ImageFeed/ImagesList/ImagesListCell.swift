@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ImagesListCellDelegate: AnyObject {
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
+}
+
 final class ImagesListCell: UITableViewCell {
     
     @IBOutlet weak var dateBackgroundOutlet: UIView!
@@ -15,6 +19,7 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet weak var dateLabelOutlet: UILabel!
     
     static let reuseIdentifier = "ImagesListCell"
+    weak var delegate: ImagesListCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,6 +37,15 @@ final class ImagesListCell: UITableViewCell {
         super.layoutSubviews()
         
         setupDateBackgroundOutlet(cornerRadius: 16)
+    }
+    
+    @IBAction func didTapLikeButton(_ sender: Any) {
+        delegate?.imageListCellDidTapLike(self)
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        let likeImage: UIImage? = isLiked ? UIImage(named: "ActiveLike") : UIImage(named: "NoActiveLike")
+        likeButtonOutlet.setImage(likeImage, for: .normal)
     }
     
     private func setupDateBackgroundOutlet(cornerRadius: Double) {

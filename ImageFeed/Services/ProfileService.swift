@@ -58,6 +58,10 @@ final class ProfileService {
         task.resume()
     }
     
+    func clean() {
+        profile = nil
+    }
+    
     private func makeProfileRequest(token: String) -> URLRequest? {
         let baseURL = Constants.defaultBaseURL
         

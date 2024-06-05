@@ -31,8 +31,10 @@
 		688C51912C07C9D70004D438 /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688C51902C07C9D70004D438 /* PhotoResult.swift */; };
 		68911E6C2BF6CDFD00C99608 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68911E6B2BF6CDFD00C99608 /* SplashViewController.swift */; };
 		68911E6E2BF6CFFE00C99608 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68911E6D2BF6CFFE00C99608 /* OAuth2TokenStorage.swift */; };
+		68A3A12C2C107E3600E7B989 /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3A12B2C107E3600E7B989 /* ProfileLogoutService.swift */; };
 		68ACEF392C049076003411C0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 68ACEF382C049076003411C0 /* Kingfisher */; };
 		68ACEF3C2C04A0F7003411C0 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 68ACEF3B2C04A0F7003411C0 /* SwiftKeychainWrapper */; };
+		68BD011B2C0F402800C554B4 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BD011A2C0F402800C554B4 /* UIImageView+Extensions.swift */; };
 		68BD020F2BC1759500977F91 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BD020E2BC1759500977F91 /* UIView+Extensions.swift */; };
 		68C051682BC9679C007A6298 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C051672BC9679C007A6298 /* ProfileViewController.swift */; };
 		68DA53C92BEFA1F5002F512F /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DA53C82BEFA1F5002F512F /* URLSession+data.swift */; };
@@ -66,6 +68,8 @@
 		688C51902C07C9D70004D438 /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
 		68911E6B2BF6CDFD00C99608 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		68911E6D2BF6CFFE00C99608 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
+		68A3A12B2C107E3600E7B989 /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
+		68BD011A2C0F402800C554B4 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		68BD020E2BC1759500977F91 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		68C051672BC9679C007A6298 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		68DA53C82BEFA1F5002F512F /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 				6856457D2BEB6EA800ED70AA /* OAuth2Service.swift */,
 				68489D672C029B3600BE8878 /* ProfileImageService.swift */,
 				688C518C2C072FC60004D438 /* ImagesListService.swift */,
+				68A3A12B2C107E3600E7B989 /* ProfileLogoutService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 			children = (
 				68BD020E2BC1759500977F91 /* UIView+Extensions.swift */,
 				68DA53C82BEFA1F5002F512F /* URLSession+data.swift */,
+				68BD011A2C0F402800C554B4 /* UIImageView+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -300,7 +306,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68BD011B2C0F402800C554B4 /* UIImageView+Extensions.swift in Sources */,
 				688C518F2C0731B60004D438 /* Photo.swift in Sources */,
+				68A3A12C2C107E3600E7B989 /* ProfileLogoutService.swift in Sources */,
 				68DA53C92BEFA1F5002F512F /* URLSession+data.swift in Sources */,
 				688C518D2C072FC60004D438 /* ImagesListService.swift in Sources */,
 				682FD5BB2BEA31A600552373 /* WebViewViewController.swift in Sources */,
