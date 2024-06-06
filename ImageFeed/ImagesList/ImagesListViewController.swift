@@ -10,8 +10,10 @@ import Kingfisher
 
 final class ImagesListViewController: UIViewController {
     
+    // MARK: - IB Outlets
     @IBOutlet private var tableView: UITableView!
-    
+
+    // MARK: - Private Properties
     private let imageListService = ImagesListService.shared
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
@@ -25,7 +27,8 @@ final class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-    
+
+    // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,7 +61,8 @@ final class ImagesListViewController: UIViewController {
             super.prepare(for: segue, sender: sender) // 7
         }
     }
-    
+
+    // MARK: - Public Methods
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         
         cell.delegate = self
@@ -67,8 +71,9 @@ final class ImagesListViewController: UIViewController {
         
         guard let url = URL(string: photo.thumbImageURL) else { return }
         
+        let placeholder = UIImage(named: "stub")
         cell.cellImageOutlet.kf.indicatorType = .activity
-        cell.cellImageOutlet.kf.setImage(with: url, placeholder: UIImage(named: "stub"), options: []) { [weak self] result in
+        cell.cellImageOutlet.kf.setImage(with: url, placeholder: placeholder, options: []) { [weak self] result in
             switch result {
             case .success:
                 if let createdDate = photo.createdAt {
@@ -79,12 +84,15 @@ final class ImagesListViewController: UIViewController {
                 
                 let likeImage: UIImage? = photo.isLiked ? UIImage(named: "ActiveLike") : UIImage(named: "NoActiveLike")
                 cell.likeButtonOutlet.setImage(likeImage, for: .normal)
+                
+                cell.cellImageOutlet.removeAnimation()
             case .failure(let error):
                 print("[ImageListViewController]: \(error.localizedDescription)")
             }
         }
     }
     
+    // MARK: - Private Methods
     private func updateTableViewAnimated() {
         let currCount = photos.count
         let newCount = imageListService.photos.count
@@ -100,6 +108,7 @@ final class ImagesListViewController: UIViewController {
     }
 }
 
+// MARK: - ImagesListCellDelegate
 extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
@@ -125,6 +134,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, 
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -144,6 +154,7 @@ extension ImagesListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -173,6 +184,7 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UIAlertController
 extension ImagesListViewController {
     private func showError() {
         

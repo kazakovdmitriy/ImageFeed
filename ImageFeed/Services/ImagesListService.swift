@@ -14,17 +14,26 @@ enum ImagesListServiceError: Error {
 
 final class ImagesListService {
     
+    // MARK: - Public Properties
     static let shared = ImagesListService()
-    private init() {}
-    
+    static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+
+    // MARK: - Private Properties
     private let storage = OAuth2TokenStorage.shared
     private let urlSession = URLSession.shared
-    private var task: URLSessionTask?
     
+    private var task: URLSessionTask?
     private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
-    
-    static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+
+    // MARK: - Initializers
+    private init() {}
+
+    // MARK: - Public Methods
+    func clean() {
+        photos = []
+        lastLoadedPage = nil
+    }
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
         assert(Thread.isMainThread)
@@ -80,17 +89,34 @@ final class ImagesListService {
         fetchPhotos(page: nextPage) { result in
                         
             switch result {
-            case .success(_):
-                print("Photo loaded success")
+            case .success(let photos):
+                self.photos += photos
+                
+                NotificationCenter.default
+                    .post(name: ImagesListService.didChangeNotification,
+                          object: self,
+                          userInfo: ["photos": self.photos])
             case .failure(let error):
                 print("[ImagesListService]: \(error.localizedDescription)")
             }
             
         }
     }
-    
-    func clean() {
-        photos = []
+
+    // MARK: - Private Methods
+    private func convertResultToPhoto(result: PhotoResultElement) -> Photo {
+        
+        let createdAt = result.createdAt
+        let dateFormatter = ISO8601DateFormatter()
+        let date = dateFormatter.date(from: createdAt)
+        
+        return Photo(id: result.id,
+                     size: CGSize(width: result.width, height: result.height),
+                     createdAt: date,
+                     welcomeDescription: result.description,
+                     thumbImageURL: result.urls.thumb,
+                     largeImageURL: result.urls.full,
+                     isLiked: result.likedByUser)
     }
     
     private func fetchPhotos(page: Int, _ completion: @escaping (Result<[Photo], Error>) -> Void) {
@@ -112,16 +138,12 @@ final class ImagesListService {
             case .success(let result):
                 self.lastLoadedPage = page
                 
+                var photos: [Photo] = []
                 result.forEach {
-                    self.photos.append(self.convertResultToPhoto(result: $0))
+                    photos.append(self.convertResultToPhoto(result: $0))
                 }
                 
-                completion(.success(self.photos))
-                
-                NotificationCenter.default
-                    .post(name: ImagesListService.didChangeNotification,
-                          object: self,
-                          userInfo: ["photos": self.photos])
+                completion(.success(photos))
                 
             case .failure(let failure):
                 print("[ImagesListService]: \(failure.localizedDescription)")
@@ -133,16 +155,6 @@ final class ImagesListService {
         
         self.task = task
         task.resume()
-    }
-    
-    private func convertResultToPhoto(result: PhotoResultElement) -> Photo {
-        return Photo(id: result.id,
-                     size: CGSize(width: result.width, height: result.height),
-                     createdAt: result.createdAt,
-                     welcomeDescription: result.description,
-                     thumbImageURL: result.urls.thumb,
-                     largeImageURL: result.urls.full,
-                     isLiked: result.likedByUser)
     }
     
     private func makeImageListRequest(page: Int) -> URLRequest? {

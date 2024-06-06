@@ -10,11 +10,14 @@ import Kingfisher
 
 final class SingleImageViewController: UIViewController {
     
+    // MARK: - IB Outlets
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private var fullScreenImageOutlet: UIImageView!
-    
+
+    // MARK: - Public Properties
     var imageURLString: String?
-    
+
+    // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,7 +28,8 @@ final class SingleImageViewController: UIViewController {
         
         loadImage()
     }
-    
+
+    // MARK: - IB Actions
     @IBAction private func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -37,23 +41,21 @@ final class SingleImageViewController: UIViewController {
         )
         present(share, animated: true, completion: nil)
     }
-    
+
+    // MARK: - Private Methods
     private func loadImage() {
         guard let imageURLString = imageURLString, let url = URL(string: imageURLString) else { return }
         
         let placeholderImage = UIImage(named: "full_screen_stub")
-        if placeholderImage == nil {
-            print("Placeholder image not found")
-        } else {
-            print("Placeholder image found")
-        }
         
+        UIBlockingProgressHUD.show()
         fullScreenImageOutlet.kf.indicatorType = .activity
         fullScreenImageOutlet.setImageWithPlaceholder(url: url,
                                                       placeholder: placeholderImage,
                                                       placeholderContentMode: .center,
-                                                      contentMode: .scaleAspectFit) 
+                                                      contentMode: .scaleAspectFit)
         { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
             guard let self = self else { return }
             
             switch result {
@@ -68,24 +70,19 @@ final class SingleImageViewController: UIViewController {
     }
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
-        // Рассчитайте размеры видимой области и изображения
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
         
-        // Рассчитайте масштаб, чтобы изображение поместилось в видимую область
         let hScale = visibleRectSize.width / imageSize.width
         let vScale = visibleRectSize.height / imageSize.height
         let scale = min(hScale, vScale)
         
-        // Установите начальный масштаб
         scrollView.minimumZoomScale = scale
         scrollView.zoomScale = scale
         
-        // Обновите размеры контента
         fullScreenImageOutlet.frame.size = CGSize(width: imageSize.width * scale, height: imageSize.height * scale)
         scrollView.contentSize = fullScreenImageOutlet.frame.size
         
-        // Центрирование изображения в scrollView
         centerImage()
     }
     
@@ -95,8 +92,12 @@ final class SingleImageViewController: UIViewController {
         fullScreenImageOutlet.center = CGPoint(x: scrollView.contentSize.width * 0.5 + offsetX,
                                                y: scrollView.contentSize.height * 0.5 + offsetY)
     }
+    
+    
+    
 }
 
+// MARK: - UIScrollViewDelegate
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return fullScreenImageOutlet
@@ -107,6 +108,7 @@ extension SingleImageViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - UIAllertController
 extension SingleImageViewController {
     private func showError() {
         let alertController = UIAlertController(title: "Что-то пошло не так. Попробовать ещё раз?",

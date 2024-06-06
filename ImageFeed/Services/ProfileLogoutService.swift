@@ -10,15 +10,20 @@ import WebKit
 import SwiftKeychainWrapper
 
 final class ProfileLogoutService {
+
+    // MARK: - Public Properties
     static let shared = ProfileLogoutService()
-    
+
+    // MARK: - Private Properties
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let imagesListSerivce = ImagesListService.shared
     private let storage = OAuth2TokenStorage.shared
-    
-    private init() { }
-    
+
+    // MARK: - Initializers
+    private init() {}
+
+    // MARK: - Public Methods
     func logout() {
         
         storage.cleanToken()
@@ -30,6 +35,7 @@ final class ProfileLogoutService {
         imagesListSerivce.clean()
     }
     
+    // MARK: - Private Methods
     private func cleanCookies() {
         // Очищаем все куки из хранилища
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)

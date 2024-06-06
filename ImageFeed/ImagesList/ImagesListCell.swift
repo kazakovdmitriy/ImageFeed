@@ -13,17 +13,23 @@ protocol ImagesListCellDelegate: AnyObject {
 
 final class ImagesListCell: UITableViewCell {
     
-    @IBOutlet weak var dateBackgroundOutlet: UIView!
+    // MARK: - IB Outlets
     @IBOutlet weak var likeButtonOutlet: UIButton!
     @IBOutlet weak var cellImageOutlet: UIImageView!
     @IBOutlet weak var dateLabelOutlet: UILabel!
-    
+    @IBOutlet private weak var dateBackgroundOutlet: UIView!
+
+    // MARK: - Public Properties
     static let reuseIdentifier = "ImagesListCell"
     weak var delegate: ImagesListCellDelegate?
     
+    // MARK: - Private Properties
+    private lazy var animationView = UIView()
+
+    // MARK: - Overrides Methods
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+    
         dateBackgroundOutlet.setGradientBackground(startColor: .clear, endColor: UIColor.ypBlack, opacity: 0.2)
     }
     
@@ -37,17 +43,21 @@ final class ImagesListCell: UITableViewCell {
         super.layoutSubviews()
         
         setupDateBackgroundOutlet(cornerRadius: 16)
+        cellImageOutlet.addAnimation(cornerRadius: 16)
     }
     
+    // MARK: - IB Actions
     @IBAction func didTapLikeButton(_ sender: Any) {
         delegate?.imageListCellDidTapLike(self)
     }
     
+    // MARK: - Public Methods
     func setIsLiked(isLiked: Bool) {
         let likeImage: UIImage? = isLiked ? UIImage(named: "ActiveLike") : UIImage(named: "NoActiveLike")
         likeButtonOutlet.setImage(likeImage, for: .normal)
     }
     
+    // MARK: - Private Methods
     private func setupDateBackgroundOutlet(cornerRadius: Double) {
         
         dateBackgroundOutlet.layer.mask?.removeFromSuperlayer()

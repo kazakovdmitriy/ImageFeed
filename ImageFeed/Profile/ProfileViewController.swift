@@ -15,11 +15,18 @@ enum FontStyle {
 
 final class ProfileViewController: UIViewController {
     
+    // MARK: - Public Properties
+
+    // MARK: - Private Properties
     private var profileImageServiceObserver: NSObjectProtocol?
     
     private let profileService = ProfileService.shared
     private let storage = OAuth2TokenStorage.shared
     private let logoutService = ProfileLogoutService.shared
+    
+    private lazy var nameLabel: UILabel = makeLabel(text: "", fontSize: 23, colorName: "YP White", fontStyle: .bold)
+    private lazy var loginLabel: UILabel = makeLabel(text: "", fontSize: 13, colorName: "YP Gray", fontStyle: .regular)
+    private lazy var statusLabel: UILabel = makeLabel(text: "", fontSize: 13, colorName: "YP White", fontStyle: .regular)
     
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "Userpick")
@@ -33,10 +40,6 @@ final class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var nameLabel: UILabel = makeLabel(text: "Екатерина Новикова", fontSize: 23, colorName: "YP White", fontStyle: .bold)
-    private lazy var loginLabel: UILabel = makeLabel(text: "@ekaterina_nov", fontSize: 13, colorName: "YP Gray", fontStyle: .regular)
-    private lazy var statusLabel: UILabel = makeLabel(text: "Hello, world!", fontSize: 13, colorName: "YP White", fontStyle: .regular)
-    
     private let exitButton: UIButton = {
         let image = UIImage(named: "Logout")
         let button = UIButton()
@@ -45,7 +48,8 @@ final class ProfileViewController: UIViewController {
     
         return button
     }()
-    
+
+    // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,14 +62,13 @@ final class ProfileViewController: UIViewController {
             }
         
         updateAvatar()
-                
-        guard let profile = profileService.profile else { return }
+        updateProfileInfo()
         
-        fillProfile(profile: profile)
         setupViews()
         constraintViews()
     }
-    
+
+    // MARK: - Private Methods
     private func makeLabel(text: String, fontSize: CGFloat, colorName: String, fontStyle: FontStyle) -> UILabel {
         let label = UILabel()
         label.text = text
@@ -89,9 +92,16 @@ final class ProfileViewController: UIViewController {
                 
         let processor = RoundCornerImageProcessor(cornerRadius: 450)
         
+        avatarImage.kf.indicatorType = .activity
         avatarImage.kf.setImage(with: url,
                                 placeholder: UIImage(named: "placeholder"),
                                 options: [.processor(processor)])
+    }
+    
+    private func updateProfileInfo() {
+        guard let profile = profileService.profile else { return }
+        
+        fillProfile(profile: profile)
     }
     
     private func setupViews() {
@@ -140,9 +150,7 @@ final class ProfileViewController: UIViewController {
     
     private func switchToSplashScreen() {
         let splashViewController = SplashViewController()
-        
         splashViewController.modalPresentationStyle = .fullScreen
-        
         present(splashViewController, animated: true)
     }
     
@@ -151,6 +159,7 @@ final class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: - UIAlertController
 extension ProfileViewController {
     private func showLogoutAlert() {
         
@@ -165,7 +174,7 @@ extension ProfileViewController {
             self.logoutService.logout()
             self.switchToSplashScreen()
         }
-        let noAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+        let noAction = UIAlertAction(title: "Нет", style: .default, handler: nil)
         
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
