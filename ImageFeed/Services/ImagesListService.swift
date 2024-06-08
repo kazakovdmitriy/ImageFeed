@@ -21,10 +21,12 @@ final class ImagesListService {
     // MARK: - Private Properties
     private let storage = OAuth2TokenStorage.shared
     private let urlSession = URLSession.shared
+    private let dateFormatter = ISO8601DateFormatter()
     
     private var task: URLSessionTask?
     private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
+    private var isFetching = false
 
     // MARK: - Initializers
     private init() {}
@@ -33,6 +35,7 @@ final class ImagesListService {
     func clean() {
         photos = []
         lastLoadedPage = nil
+        isFetching = false
     }
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
@@ -84,8 +87,12 @@ final class ImagesListService {
     }
     
     func fetchPhotosNextPage() {
+        
+        guard !isFetching else { return }
+        
         let nextPage = (lastLoadedPage ?? 0) + 1
         
+        isFetching = true
         fetchPhotos(page: nextPage) { result in
                         
             switch result {
@@ -100,6 +107,7 @@ final class ImagesListService {
                 print("[ImagesListService]: \(error.localizedDescription)")
             }
             
+            self.isFetching = false
         }
     }
 
@@ -107,12 +115,10 @@ final class ImagesListService {
     private func convertResultToPhoto(result: PhotoResultElement) -> Photo {
         
         let createdAt = result.createdAt
-        let dateFormatter = ISO8601DateFormatter()
-        let date = dateFormatter.date(from: createdAt)
         
         return Photo(id: result.id,
                      size: CGSize(width: result.width, height: result.height),
-                     createdAt: date,
+                     createdAt: createdAt,
                      welcomeDescription: result.description,
                      thumbImageURL: result.urls.thumb,
                      largeImageURL: result.urls.full,

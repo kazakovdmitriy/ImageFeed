@@ -12,7 +12,7 @@ final class ImagesListViewController: UIViewController {
     
     // MARK: - IB Outlets
     @IBOutlet private var tableView: UITableView!
-
+    
     // MARK: - Private Properties
     private let imageListService = ImagesListService.shared
     
@@ -27,7 +27,7 @@ final class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-
+    
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +61,7 @@ final class ImagesListViewController: UIViewController {
             super.prepare(for: segue, sender: sender) // 7
         }
     }
-
+    
     // MARK: - Public Methods
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         
@@ -69,27 +69,30 @@ final class ImagesListViewController: UIViewController {
         
         let photo = photos[indexPath.row]
         
-        guard let url = URL(string: photo.thumbImageURL) else { return }
+        // cell.cellImageOutlet.startAnimating()
         
-        let placeholder = UIImage(named: "stub")
-        cell.cellImageOutlet.kf.indicatorType = .activity
-        cell.cellImageOutlet.kf.setImage(with: url, placeholder: placeholder, options: []) { [weak self] result in
-            switch result {
-            case .success:
-                if let createdDate = photo.createdAt {
-                    cell.dateLabelOutlet.text = self?.dateFormatter.string(from: createdDate)
-                } else {
-                    cell.dateLabelOutlet.text = ""
+        if let url = URL(string: photo.thumbImageURL) {
+            let placeholder = UIImage(named: "stub") // Заполнитель
+            cell.cellImageOutlet.kf.indicatorType = .activity
+            cell.cellImageOutlet.kf.setImage(with: url, placeholder: placeholder, options: []) { result in
+                switch result {
+                case .success: 
+                    // cell.cellImageOutlet.removeAnimation()
+                    break
+                case .failure(let error):
+                    print("[ImageListViewController]: \(error.localizedDescription)")
                 }
-                
-                let likeImage: UIImage? = photo.isLiked ? UIImage(named: "ActiveLike") : UIImage(named: "NoActiveLike")
-                cell.likeButtonOutlet.setImage(likeImage, for: .normal)
-                
-                cell.cellImageOutlet.removeAnimation()
-            case .failure(let error):
-                print("[ImageListViewController]: \(error.localizedDescription)")
             }
         }
+        
+        if let createdDate = photo.createdAt {
+            cell.dateLabelOutlet.text = self.dateFormatter.string(from: createdDate)
+        } else {
+            cell.dateLabelOutlet.text = ""
+        }
+        
+        let likeImage: UIImage? = photo.isLiked ? UIImage(named: "ActiveLike") : UIImage(named: "NoActiveLike")
+        cell.likeButtonOutlet.setImage(likeImage, for: .normal)
     }
     
     // MARK: - Private Methods
@@ -130,13 +133,12 @@ extension ImagesListViewController: ImagesListCellDelegate {
                 self.showError()
             }
         }
-        cell.setIsLiked(isLiked: photo.isLiked)
     }
 }
 
 // MARK: - UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, 
+    func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let image = photos[indexPath.row]

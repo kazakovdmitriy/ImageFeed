@@ -15,8 +15,6 @@ enum FontStyle {
 
 final class ProfileViewController: UIViewController {
     
-    // MARK: - Public Properties
-
     // MARK: - Private Properties
     private var profileImageServiceObserver: NSObjectProtocol?
     
@@ -150,8 +148,13 @@ final class ProfileViewController: UIViewController {
     
     private func switchToSplashScreen() {
         let splashViewController = SplashViewController()
-        splashViewController.modalPresentationStyle = .fullScreen
-        present(splashViewController, animated: true)
+        
+        guard let window = UIApplication.shared.windows.first else {
+            assertionFailure("Invalid window configuration")
+            return
+        }
+        
+        window.rootViewController = splashViewController
     }
     
     @objc private func didTapLogoutButton() {

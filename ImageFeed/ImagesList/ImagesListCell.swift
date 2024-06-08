@@ -43,11 +43,10 @@ final class ImagesListCell: UITableViewCell {
         super.layoutSubviews()
         
         setupDateBackgroundOutlet(cornerRadius: 16)
-        cellImageOutlet.addAnimation(cornerRadius: 16)
     }
     
     // MARK: - IB Actions
-    @IBAction func didTapLikeButton(_ sender: Any) {
+    @IBAction private func didTapLikeButton(_ sender: Any) {
         delegate?.imageListCellDidTapLike(self)
     }
     

@@ -47,6 +47,6 @@ extension UIView {
     }
     
     func removeAnimation() {
-            layer.sublayers?.removeAll { $0.name == "animationGradient" }
-        }
+        layer.sublayers?.removeAll { $0.name == "animationGradient" }
+    }
 }
