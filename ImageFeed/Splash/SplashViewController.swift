@@ -27,7 +27,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         setupViews()
         constraintViews()
     }
@@ -105,12 +105,23 @@ extension SplashViewController: AuthViewControllerDelegate {
                 let username = profile.username
                 
                 ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in }
-                print("Загрузили картинку")
                 
                 self.switchToTabBarController()
             case .failure(let error):
                 print("[SplashViewController]: \(error.localizedDescription)")
+                showErrorAlert()
             }
         }
+    }
+}
+
+extension SplashViewController {
+    private func showErrorAlert() {
+        let alertController = UIAlertController(title: "Что-то пошло не так",
+                                                message: "Не удалось войти в систему",
+                                                preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
     }
 }
