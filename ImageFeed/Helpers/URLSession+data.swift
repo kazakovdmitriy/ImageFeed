@@ -60,6 +60,8 @@ extension URLSession {
                 }
             case .failure(let error):
                 print("[objectTask]: NetworkError - \(error.localizedDescription)")
+                print("error on load: \(error)")
+                completion(.failure(error))
             }
         }
         return task

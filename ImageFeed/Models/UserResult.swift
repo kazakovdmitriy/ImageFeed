@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - UserResult
-struct UserResult: Codable {
+struct UserResult: Decodable {
     let profileImage: ProfileImage
 
     enum CodingKeys: String, CodingKey {
@@ -18,6 +18,6 @@ struct UserResult: Codable {
 }
 
 // MARK: - ProfileImage
-struct ProfileImage: Codable {
+struct ProfileImage: Decodable {
     let small, medium, large: String
 }

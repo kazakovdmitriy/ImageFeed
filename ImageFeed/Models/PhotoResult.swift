@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - PhotoResultElement
-struct PhotoResultElement: Codable {
+struct PhotoResultElement: Decodable {
     let id: String
     let createdAt: Date?
     let width, height: Int
@@ -31,7 +31,7 @@ struct PhotoResultElement: Codable {
 }
 
 // MARK: - Urls
-struct Urls: Codable {
+struct Urls: Decodable {
     let raw, full, regular, small: String
     let thumb: String
 }
