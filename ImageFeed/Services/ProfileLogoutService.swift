@@ -9,7 +9,11 @@ import Foundation
 import WebKit
 import SwiftKeychainWrapper
 
-final class ProfileLogoutService {
+protocol ProfileLogoutServiceProtocol {
+    func logout()
+}
+
+final class ProfileLogoutService: ProfileLogoutServiceProtocol {
 
     // MARK: - Public Properties
     static let shared = ProfileLogoutService()

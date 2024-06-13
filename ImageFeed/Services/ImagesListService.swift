@@ -103,6 +103,8 @@ final class ImagesListService {
                     .post(name: ImagesListService.didChangeNotification,
                           object: self,
                           userInfo: ["photos": self.photos])
+                
+                print("Получены фото")
             case .failure(let error):
                 print("[ImagesListService]: \(error.localizedDescription)")
             }
