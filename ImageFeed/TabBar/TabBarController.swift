@@ -12,7 +12,7 @@ final class TabBarController: UITabBarController {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let imagesListPresenter = ImagesListPresenter()
+        let imagesListPresenter = ImagesListPresenter(imageListService: ImagesListService.shared)
         let imagesListViewController = ImagesListViewController(presenter: imagesListPresenter)
         
         imagesListViewController.tabBarItem = UITabBarItem(

@@ -23,7 +23,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     weak var view: ImagesListViewProtocol?
     var photos: [Photo] = []
     
-    private let imageListService = ImagesListService.shared
+    private let imageListService: ImageListServiceProtocol
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -31,6 +31,10 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         return formatter
     }()
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
+    
+    init(imageListService: ImageListServiceProtocol) {
+        self.imageListService = imageListService
+    }
     
     func viewDidLoad() {
         NotificationCenter.default.addObserver(
