@@ -43,9 +43,17 @@ final class ProfileService: ProfileServiceProtocol {
             
             switch result {
             case .success(let answer):
-                let lastName = answer.lastName ?? ""
+                
+                let fullName: String
+                
+                if let lastName = answer.lastName {
+                    fullName = "\(answer.firstName) \(lastName)"
+                } else {
+                    fullName = "\(answer.firstName)"
+                }
+                
                 let profile = Profile(username: answer.username,
-                                      name: "\(answer.firstName) \(lastName)",
+                                      name: fullName,
                                       loginName: "@\(answer.username)",
                                       bio: answer.bio ?? "")
                 

@@ -27,16 +27,17 @@ final class ImageFeedUITests: XCTestCase {
         XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
         
         loginTextField.tap()
-        loginTextField.typeText("")
+        sleep(1)
+        loginTextField.typeText("") // Email
         app.tap()
-        sleep(3)
+        sleep(2)
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
         passwordTextField.tap()
-        sleep(3)
-        passwordTextField.typeText("")
-        sleep(2)
+        sleep(1)
+        passwordTextField.typeText("") // Password
+        sleep(1)
         
         webView.buttons["Login"].tap()
         
@@ -82,20 +83,14 @@ final class ImageFeedUITests: XCTestCase {
         sleep(3)
         app.tabBars.buttons.element(boundBy: 1).tap()
        
-        XCTAssertTrue(app.staticTexts[""].exists)
-        XCTAssertTrue(app.staticTexts[""].exists)
+        XCTAssertTrue(app.staticTexts[""].exists) // Name
+        XCTAssertTrue(app.staticTexts[""].exists) // Bio Name
         
         app.buttons["logout button"].tap()
         
         app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
-    }
-}
-
-
-extension XCUIElement {
-    func tapUnhittable() {
-        XCTContext.runActivity(named: "Tap \(self) by coordinate") { _ in
-            coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        }
+        sleep(2)
+        
+        app.buttons["Authenticate"].tap()
     }
 }
