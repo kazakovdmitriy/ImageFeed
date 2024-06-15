@@ -8,31 +8,6 @@
 @testable import ImageFeed
 import XCTest
 
-final class WebViewPresenterSpy: WebViewPresenterProtocol {
-    var viewDidLoadCalled: Bool = false
-    var view: ImageFeed.WebViewViewControllerProtocol?
-    
-    func viewDidLoad() {
-        viewDidLoadCalled = true
-    }
-    
-    func didUpdateProgressValue(_ newValue: Double) {}
-    
-    func code(from url: URL) -> String? { return nil }
-}
-
-final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
-    var loadRequestCalled: Bool = false
-    var presenter: ImageFeed.WebViewPresenterProtocol?
-    
-    func load(request: URLRequest) {
-        loadRequestCalled = true
-    }
-    
-    func setProgressValue(_ newValue: Float) { }
-    func setProgressHidden(_ isHidden: Bool) { }
-}
-
 final class WebViewTest: XCTestCase {
     func testViewControllerCallsViewDidLoad() {
         // given
@@ -121,4 +96,31 @@ final class WebViewTest: XCTestCase {
         // then
         XCTAssertEqual(code, "test code")
     }
+}
+
+// MARK: - Mocks
+
+final class WebViewPresenterSpy: WebViewPresenterProtocol {
+    var viewDidLoadCalled: Bool = false
+    var view: ImageFeed.WebViewViewControllerProtocol?
+    
+    func viewDidLoad() {
+        viewDidLoadCalled = true
+    }
+    
+    func didUpdateProgressValue(_ newValue: Double) {}
+    
+    func code(from url: URL) -> String? { return nil }
+}
+
+final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
+    var loadRequestCalled: Bool = false
+    var presenter: ImageFeed.WebViewPresenterProtocol?
+    
+    func load(request: URLRequest) {
+        loadRequestCalled = true
+    }
+    
+    func setProgressValue(_ newValue: Float) { }
+    func setProgressHidden(_ isHidden: Bool) { }
 }
