@@ -13,7 +13,7 @@ enum FontStyle {
     case regular
 }
 
-protocol ProfileViewControllerProtocol {
+protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol { get set }
     
     func fillProfile(profile: Profile)
@@ -27,7 +27,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     private var profileImageServiceObserver: NSObjectProtocol?
     private lazy var nameLabel: UILabel = presenter.makeLabel(text: "", fontSize: 23, color: UIColor.ypWhite, fontStyle: .bold)
     private lazy var loginLabel: UILabel = presenter.makeLabel(text: "", fontSize: 13, color: UIColor.ypGray, fontStyle: .regular)
-    private lazy var statusLabel: UILabel = presenter.makeLabel(text: "", fontSize: 13, color: UIColor.ypWhite, fontStyle: .regular)
+    private lazy var bioLabel: UILabel = presenter.makeLabel(text: "", fontSize: 13, color: UIColor.ypWhite, fontStyle: .regular)
     
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "Userpick")
@@ -75,7 +75,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     func fillProfile(profile: Profile) {
         nameLabel.text = profile.name
         loginLabel.text = "@\(profile.username)"
-        statusLabel.text = profile.bio
+        bioLabel.text = profile.bio
     }
     
     // MARK: - Private Methods
@@ -108,12 +108,14 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         [avatarImage,
          nameLabel,
          loginLabel,
-         statusLabel,
+         bioLabel,
          exitButton].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
+        bioLabel.lineBreakMode = .byWordWrapping
+        bioLabel.numberOfLines = 0
         exitButton.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         
     }
@@ -131,8 +133,9 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
             loginLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             loginLabel.leadingAnchor.constraint(equalTo: avatarImage.leadingAnchor),
             
-            statusLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 8),
-            statusLabel.leadingAnchor.constraint(equalTo: avatarImage.leadingAnchor),
+            bioLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 8),
+            bioLabel.leadingAnchor.constraint(equalTo: avatarImage.leadingAnchor),
+            bioLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
             exitButton.widthAnchor.constraint(equalToConstant: 44),
             exitButton.heightAnchor.constraint(equalToConstant: 44),

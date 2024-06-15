@@ -43,8 +43,9 @@ final class ProfileService: ProfileServiceProtocol {
             
             switch result {
             case .success(let answer):
+                let lastName = answer.lastName ?? ""
                 let profile = Profile(username: answer.username,
-                                      name: "\(answer.firstName) \(answer.lastName)",
+                                      name: "\(answer.firstName) \(lastName)",
                                       loginName: "@\(answer.username)",
                                       bio: answer.bio ?? "")
                 

@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-protocol ProfileViewPresenterProtocol {
+protocol ProfileViewPresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
     
     func makeLogoutAlert() -> UIAlertController
@@ -20,7 +20,7 @@ protocol ProfileViewPresenterProtocol {
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     // MARK: - Public Properties
-    var view: ProfileViewControllerProtocol?
+    weak var view: ProfileViewControllerProtocol?
     
     // MARK: - Private Properties
     private let logoutService: ProfileLogoutServiceProtocol
