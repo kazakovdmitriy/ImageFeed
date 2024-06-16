@@ -12,7 +12,14 @@ enum ImagesListServiceError: Error {
     case invalidLikeRequest
 }
 
-final class ImagesListService {
+protocol ImageListServiceProtocol {
+    var photos: [Photo] { get }
+    
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void)
+    func fetchPhotosNextPage()
+}
+
+final class ImagesListService: ImageListServiceProtocol {
     
     // MARK: - Public Properties
     static let shared = ImagesListService()
@@ -103,6 +110,8 @@ final class ImagesListService {
                     .post(name: ImagesListService.didChangeNotification,
                           object: self,
                           userInfo: ["photos": self.photos])
+                
+                print("Получены фото")
             case .failure(let error):
                 print("[ImagesListService]: \(error.localizedDescription)")
             }

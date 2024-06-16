@@ -11,7 +11,11 @@ enum ProfileServiceError: Error {
     case invalidRequest
 }
 
-final class ProfileService {
+protocol ProfileServiceProtocol {
+    var profile: Profile? { get }
+}
+
+final class ProfileService: ProfileServiceProtocol {
     
     static let shared = ProfileService()
     private init() {}
@@ -39,8 +43,17 @@ final class ProfileService {
             
             switch result {
             case .success(let answer):
+                
+                let fullName: String
+                
+                if let lastName = answer.lastName {
+                    fullName = "\(answer.firstName) \(lastName)"
+                } else {
+                    fullName = "\(answer.firstName)"
+                }
+                
                 let profile = Profile(username: answer.username,
-                                      name: "\(answer.firstName) \(answer.lastName)",
+                                      name: fullName,
                                       loginName: "@\(answer.username)",
                                       bio: answer.bio ?? "")
                 

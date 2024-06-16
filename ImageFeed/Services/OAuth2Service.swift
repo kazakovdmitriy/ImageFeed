@@ -17,6 +17,7 @@ final class OAuth2Service {
     
     private let urlSession = URLSession.shared
     private let storage = OAuth2TokenStorage.shared
+    private let authConfiguration = AuthConfiguration.standart
     
     private var task: URLSessionTask?
     private var lastCode: String?
@@ -67,9 +68,9 @@ final class OAuth2Service {
         
         guard let url = URL(
             string: "/oauth/token"
-            + "?client_id=\(Constants.accessKey)"
-            + "&&client_secret=\(Constants.secretKey)"
-            + "&&redirect_uri=\(Constants.redirectURI)"
+            + "?client_id=\(authConfiguration.accessKey)"
+            + "&&client_secret=\(authConfiguration.secretKey)"
+            + "&&redirect_uri=\(authConfiguration.redirectURI)"
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             relativeTo: baseURL

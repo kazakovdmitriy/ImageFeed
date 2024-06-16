@@ -11,8 +11,8 @@ import Foundation
 struct ProfileResult: Decodable {
     let id: String
     let username, 
-        firstName,
-        lastName: String
+        firstName: String,
+        lastName: String?
     let bio: String?
 
     enum CodingKeys: String, CodingKey {
