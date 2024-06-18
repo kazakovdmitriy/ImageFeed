@@ -145,7 +145,12 @@
 		682FD5B42BE97E6600552373 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6844D4C62BB590C9008F1525 /* AppDelegate.swift */,
+				6844D4C82BB590C9008F1525 /* SceneDelegate.swift */,
+				6844D4CC2BB590C9008F1525 /* Main.storyboard */,
+				6844D4CF2BB590CA008F1525 /* Assets.xcassets */,
 				682FD5B52BE97E7900552373 /* AuthConfiguration.swift */,
+				6844D4D12BB590CA008F1525 /* LaunchScreen.storyboard */,
 				6853AA372C1D8C7600B925EE /* Constants.swift */,
 			);
 			path = Resources;
@@ -194,6 +199,7 @@
 		6844D4C52BB590C9008F1525 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				6844D4D42BB590CA008F1525 /* Info.plist */,
 				684B7BC42C05CCF6001795C1 /* TabBar */,
 				685DEB9A2C00B21E002606D9 /* Services */,
 				68911E6A2BF6CDD100C99608 /* Splash */,
@@ -204,12 +210,6 @@
 				68E15F8A2BBFDFAE000B753A /* ImagesList */,
 				68AD6E002BCAD2BB0013A424 /* SingleImageView */,
 				682FD5B42BE97E6600552373 /* Resources */,
-				6844D4C62BB590C9008F1525 /* AppDelegate.swift */,
-				6844D4C82BB590C9008F1525 /* SceneDelegate.swift */,
-				6844D4CC2BB590C9008F1525 /* Main.storyboard */,
-				6844D4CF2BB590CA008F1525 /* Assets.xcassets */,
-				6844D4D12BB590CA008F1525 /* LaunchScreen.storyboard */,
-				6844D4D42BB590CA008F1525 /* Info.plist */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
